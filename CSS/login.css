@@ -28,7 +28,7 @@
     border: 2px solid var(--ink);
     border-radius: 10px;
     padding: 2rem;
-    box-shadow: 8px 8px 0 var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
 }
 
 .login-brand { margin-bottom: 1.5rem; }
