@@ -18,12 +18,24 @@ if (empty($_SESSION['csrf'])) {
 // Barangays for the dropdown
 try {
     $barangays = db()->query('SELECT id, name FROM barangays ORDER BY name')->fetchAll();
+
+    // Make sure the seven barangays of Cainta exist (safe to run repeatedly)
+    if (count($barangays) < 7) {
+        $caintaBarangays = [
+            'San Andres', 'San Isidro', 'San Juan', 'San Roque',
+            'Santa Rosa', 'Santo Domingo', 'Santo Niño',
+        ];
+        $seed = db()->prepare('INSERT IGNORE INTO barangays (name) VALUES (?)');
+        foreach ($caintaBarangays as $name) {
+            $seed->execute([$name]);
+        }
+        $barangays = db()->query('SELECT id, name FROM barangays ORDER BY name')->fetchAll();
+    }
 } catch (PDOException $e) {
     error_log('CAINTRACK register error: ' . $e->getMessage());
     $barangays = [];
     $errors[]  = 'Something went wrong on our side. Please try again later.';
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$errors) {
     $old['full_name']   = trim($_POST['full_name'] ?? '');
     $old['username']    = trim($_POST['username'] ?? '');
