@@ -1,0 +1,34 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: caintrack
+      DB_USER: caintrack
+      DB_PASS: change_me
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: caintrack
+      MYSQL_USER: caintrack
+      MYSQL_PASSWORD: change_me
+      MYSQL_ROOT_PASSWORD: change_me_too
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+
+volumes:
+  dbdata:

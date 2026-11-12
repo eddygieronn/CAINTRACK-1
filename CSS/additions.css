@@ -1,0 +1,26 @@
+/* Append this to CSS/login.css */
+.form-success {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 5px solid #1E6B34;
+    background: #E6F4EA;
+    color: #14501F;
+    font-weight: 500;
+}
+
+.field select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.field select:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.login-help a { font-weight: 700; }
