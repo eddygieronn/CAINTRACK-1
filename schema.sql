@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT fk_users_barangay FOREIGN KEY (barangay_id) REFERENCES barangays(id)
 ) ENGINE=InnoDB;
 
+
 INSERT IGNORE INTO barangays (name) VALUES
  ('San Andres'), ('San Isidro'), ('San Juan'), ('San Roque'),
  ('Santa Rosa'), ('Santo Domingo'), ('Santo Niño');
