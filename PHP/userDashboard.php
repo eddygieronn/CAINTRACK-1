@@ -1,46 +1,14 @@
 <?php
-session_start();
+require __DIR__ . '/includes/auth.php';
 require __DIR__ . '/includes/db.php';
+require_role('barangay');
 
-// Must be signed in
-if (empty($_SESSION['user_id']) || empty($_SESSION['role'])) {
-    header('Location: signin.php');
+// A barangay account must be linked to a barangay
+if (empty($_SESSION['barangay_id'])) {
+    header('Location: logout.php');
     exit;
 }
 
-// DILG users have their own dashboard
-if ($_SESSION['role'] === 'dilg') {
-    header('Location: dashboard_dilg.php');
-    exit;
-}
-
-// Only barangay users with a barangay may stay on this page
-if ($_SESSION['role'] !== 'barangay' || empty($_SESSION['barangay_id'])) {
-    $_SESSION = [];
-    session_destroy();
-    header('Location: signin.php');
-    exit;
-}
-
-// CSRF token (signin.php normally sets it; this is a safety net)
-if (empty($_SESSION['csrf'])) {
-    $_SESSION['csrf'] = bin2hex(random_bytes(32));
-}
-
-// Log out
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
-    if (!hash_equals($_SESSION['csrf'], $_POST['csrf'] ?? '')) {
-        http_response_code(403);
-        exit('Invalid request. Please refresh and try again.');
-    }
-
-    $_SESSION = [];
-    session_destroy();
-    header('Location: signin.php');
-    exit;
-}
-
-$systemName = 'CAINTRACK';
 $fullName   = $_SESSION['full_name'] ?? 'Barangay User';
 $barangayId = (int) $_SESSION['barangay_id'];
 
@@ -95,67 +63,13 @@ $statusMap = [
 
 // Show a dash instead of 0 when the data could not be loaded
 $show = fn(int $n): string => $dbError ? '—' : (string) $n;
+
+// Layout settings, then the shared top of the page
+$pageTitle  = 'Barangay Dashboard';
+$activePage = 'dashboard';
+$extraCss   = ['dbuser_table.css'];
+require __DIR__ . '/includes/user_top.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Barangay Dashboard | <?= $systemName ?></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link rel="stylesheet" href="../CSS/dbuser.css">
-    <link rel="stylesheet" href="../CSS/dbuser_table.css">
-</head>
-<body class="dashboard-page">
-
-<header class="dashboard-header">
-    <div class="dashboard-brand">
-        <a class="brand" href="userDashboard.php">
-            <img src="../IMAGES/dilglogo.png" alt="DILG seal" class="logo">
-            <img src="../IMAGES/caintalogo.png" alt="Cainta seal" class="logo">
-            <span class="brand-name"><?= $systemName ?></span>
-        </a>
-        <span class="portal-label">
-            Barangay Portal<?= $barangayName !== '' ? ' · ' . htmlspecialchars($barangayName) : '' ?>
-        </span>
-    </div>
-
-    <div class="account-area">
-        <span class="account-name"><?= htmlspecialchars($fullName) ?></span>
-        <form method="post" action="userDashboard.php">
-            <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
-            <button class="btn btn-dark logout-btn" type="submit" name="logout" value="1">
-                Log out
-            </button>
-        </form>
-    </div>
-</header>
-
-<div class="dashboard-layout">
-    <aside class="dashboard-sidebar">
-        <p class="sidebar-label">WORKSPACE</p>
-        <a class="sidebar-link active" href="userDashboard.php">
-            <span>▦</span> Dashboard
-        </a>
-        <a class="sidebar-link" href="documents_barangay.php">
-            <span>▤</span> My Documents
-        </a>
-        <a class="sidebar-link" href="submit_document.php">
-            <span>＋</span> Submit a Document
-        </a>
-        <a class="sidebar-link" href="compliance_barangay.php">
-            <span>✓</span> Compliance Status
-        </a>
-        <div class="sidebar-note">
-            <strong>CAINTRACK</strong>
-            <p>Barangay Document Monitoring and Tracking System</p>
-        </div>
-    </aside>
-
-    <main class="dashboard-main">
         <div class="welcome-section">
             <div>
                 <p class="eyebrow">BARANGAY WORKSPACE</p>
@@ -242,11 +156,4 @@ $show = fn(int $n): string => $dbError ? '—' : (string) $n;
             <?php endif; ?>
         </section>
 
-        <footer class="dashboard-footer">
-            <p>CAINTRACK · DILG Cainta, Rizal</p>
-        </footer>
-    </main>
-</div>
-
-</body>
-</html>
+<?php require __DIR__ . '/includes/user_bottom.php'; ?>
