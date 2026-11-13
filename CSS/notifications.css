@@ -1,0 +1,38 @@
+.sidebar-button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+}
+
+.notif-dialog {
+    width: min(440px, calc(100% - 2rem));
+    max-height: 80vh;
+    padding: 0;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    color: var(--ink);
+    background: var(--white);
+}
+.notif-dialog::backdrop { background: rgba(42, 23, 8, 0.45); }
+
+.notif-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.25rem; border-bottom: 1px solid var(--line);
+}
+.notif-head h2 { margin: 0; font-size: 1.15rem; }
+.notif-close {
+    border: none; background: none; padding: 0.25rem 0.5rem;
+    font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--ink);
+}
+
+.notif-list { list-style: none; margin: 0; padding: 0; max-height: 60vh; overflow-y: auto; }
+.notif-item { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--line); }
+.notif-item:last-child { border-bottom: none; }
+.notif-item p { margin: 0 0 0.2rem; }
+.notif-remarks { color: var(--muted); font-size: 0.9rem; }
+.notif-item small { color: var(--muted); }
+.notif-empty { margin: 0; padding: 1.5rem 1.25rem; color: var(--muted); }

@@ -1,0 +1,61 @@
+/* Submit a Document page */
+button.btn { font: inherit; cursor: pointer; }
+
+.submit-form { max-width: 620px; }
+
+.form-field { margin-bottom: 1.25rem; }
+
+.form-field label { display: block; margin-bottom: 0.35rem; font-weight: 700; }
+
+.form-field input[type="text"],
+.form-field select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.form-field input[type="file"] {
+    width: 100%;
+    padding: 0.6rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--orange-tint);
+    border: 2px dashed var(--ink);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form-field input:focus-visible,
+.form-field select:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.form-hint { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
+
+.form-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+
+.form-success-box,
+.form-error-box {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+.form-success-box {
+    border-left: 5px solid #1E6B34;
+    background: #E6F4EA;
+    color: #14532B;
+}
+
+.form-success-box a { margin-left: 0.5rem; font-weight: 700; }
+
+.form-error-box {
+    border-left: 5px solid #A12A1A;
+    background: #FCE8E4;
+    color: #7A1F13;
+}

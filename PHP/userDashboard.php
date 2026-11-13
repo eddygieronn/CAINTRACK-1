@@ -67,7 +67,7 @@ $show = fn(int $n): string => $dbError ? '—' : (string) $n;
 // Layout settings, then the shared top of the page
 $pageTitle  = 'Barangay Dashboard';
 $activePage = 'dashboard';
-$extraCss   = ['dbuser_table.css'];
+$extraCss   = ['dbuser.css'];
 require __DIR__ . '/includes/user_top.php';
 ?>
         <div class="welcome-section">

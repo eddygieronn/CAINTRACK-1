@@ -1,0 +1,50 @@
+/* Compliance Status page */
+.progress {
+    height: 12px;
+    margin-bottom: 1.25rem;
+    background: var(--orange-tint);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar { height: 100%; background: #1E6B34; }
+
+.table-wrap { overflow-x: auto; }
+
+.submission-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+
+.submission-table th,
+.submission-table td {
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.submission-table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.submission-table td:first-child { font-weight: 700; white-space: normal; }
+
+.deadline-note {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #A12A1A;
+}
+
+.action-link { font-weight: 700; color: var(--orange-deep); }
+
+.db-alert {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 5px solid #A12A1A;
+    background: #FCE8E4;
+    color: #7A1F13;
+    font-weight: 500;
+}
