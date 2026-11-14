@@ -56,7 +56,7 @@ $roles = [
     <section class="hero">
         <div class="wrap hero-grid">
             <div class="hero-copy">
-                <h1>Know where every barangay document stands.</h1>
+                <h1>Know where <br>every barangay<br> document stands.</h1>
                 <p class="lead">
                     <?= $systemName ?> helps DILG Cainta and its seven barangays submit, track,
                     and monitor documents in one place.
