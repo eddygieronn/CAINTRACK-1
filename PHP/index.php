@@ -47,7 +47,7 @@ $roles = [
         <nav class="nav" aria-label="Main">
             <a href="#features">Features</a>
             <a href="#users">Who uses it</a>
-            <a href="login.php" class="btn btn-dark">Log in</a>
+            <a href="register.php" class="btn btn-dark">Sign in</a>
         </nav>
     </div>
 </header>
