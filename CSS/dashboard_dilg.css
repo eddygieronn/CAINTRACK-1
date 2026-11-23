@@ -1,0 +1,75 @@
+/* DILG dashboard components (layout comes from dbuser.css) */
+button.btn { font: inherit; cursor: pointer; }
+
+.stack-gap { margin-top: 1.5rem; }
+
+.notice {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 5px solid #1E6B34;
+    background: #E6F4EA;
+    color: #14532B;
+    font-weight: 500;
+}
+
+.db-alert {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 5px solid #A12A1A;
+    background: #FCE8E4;
+    color: #7A1F13;
+    font-weight: 500;
+}
+
+.empty-note { margin: 0; color: var(--muted); }
+
+.table-wrap { overflow-x: auto; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.data-table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.data-table td:first-child { font-weight: 700; }
+
+.rate-cell { display: flex; align-items: center; gap: 0.75rem; min-width: 200px; }
+.rate-cell span { font-weight: 700; min-width: 3ch; }
+
+.progress-sm {
+    flex: 1;
+    height: 10px;
+    background: var(--orange-tint);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-sm-bar { height: 100%; background: #1E6B34; }
+
+.row-actions { display: flex; gap: 0.5rem; }
+.row-actions form { margin: 0; }
+
+.btn-sm {
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    border: 2px solid var(--ink);
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.btn-approve { background: #1E6B34; border-color: #1E6B34; color: var(--white); }
+.btn-reject  { background: var(--white); color: #A12A1A; border-color: #A12A1A; }
