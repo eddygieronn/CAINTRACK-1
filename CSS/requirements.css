@@ -1,0 +1,67 @@
+/* Required Documents page (table styles come from dashboard_dilg.css) */
+button.btn { font: inherit; cursor: pointer; }
+
+.req-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0 1.25rem;
+    align-items: start;
+}
+
+.field-wide { grid-column: 1 / -1; }
+
+.form-field { margin-bottom: 1.1rem; }
+.form-field label { display: block; margin-bottom: 0.35rem; font-weight: 700; }
+
+.form-field input[type="text"],
+.form-field input[type="date"],
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.form-field textarea { resize: vertical; }
+
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.form-hint { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.form-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+/* Table */
+.data-table td.wrap-cell { white-space: normal; min-width: 220px; }
+
+.row-desc {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--muted);
+}
+
+.row-inactive td { color: var(--muted); }
+.row-inactive td:first-child { color: var(--ink); }
+
+.deadline-note { display: block; font-size: 0.8rem; font-weight: 700; color: #A12A1A; }
+
+.btn-neutral {
+    display: inline-block;
+    background: var(--white);
+    color: var(--ink);
+    text-decoration: none;
+}
+.btn-neutral:hover { background: var(--orange-tint); }
+
+@media (max-width: 900px) {
+    .req-form { grid-template-columns: 1fr; }
+}

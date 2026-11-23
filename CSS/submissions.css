@@ -1,0 +1,94 @@
+/* Review Submissions list and review page */
+button.btn { font: inherit; cursor: pointer; }
+
+/* Filters */
+.filter-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; margin-bottom: 1.25rem; }
+.filter-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.filter-search { flex: 1 1 220px; }
+.filter-field label { font-weight: 700; font-size: 0.9rem; }
+
+.filter-field input,
+.filter-field select {
+    padding: 0.6rem 0.8rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.filter-field input:focus-visible,
+.filter-field select:focus-visible,
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.result-count { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.9rem; }
+
+/* Table helpers (table styles come from dashboard_dilg.css) */
+.data-table td.wrap-cell { white-space: normal; min-width: 160px; }
+.muted-cell { color: var(--muted); }
+.action-link { font-weight: 700; color: var(--orange-deep); }
+
+/* Pagination */
+.pagination { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+
+.pagination a,
+.pagination span {
+    padding: 0.4rem 0.8rem;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.pagination a:hover { background: var(--orange-tint); }
+.pagination .current { background: var(--ink); color: var(--white); }
+.pagination .disabled { opacity: 0.4; }
+
+/* Review page */
+.review-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.detail-list { margin: 0; }
+
+.detail-list > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-list dt { font-weight: 700; color: var(--muted); }
+.detail-list dd { margin: 0; text-align: right; }
+
+.form-field { margin-bottom: 1.25rem; }
+.form-field label { display: block; margin-bottom: 0.35rem; font-weight: 700; }
+
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.form-field textarea { resize: vertical; }
+.form-hint { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
+.form-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+@media (max-width: 900px) {
+    .review-grid { grid-template-columns: 1fr; }
+}
