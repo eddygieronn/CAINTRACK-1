@@ -175,6 +175,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ]);
                         }
 
+                        // Record the first version of this document (needs the document_versions table)
+                        try {
+                            $docId = (int) db()->lastInsertId();
+                            db()->prepare(
+                                'INSERT INTO document_versions (document_id, version_no, file_path, uploaded_by)
+                                 VALUES (?, 1, ?, ?)'
+                            )->execute([$docId, 'uploads/' . $stored, $userId]);
+                        } catch (PDOException $e) {
+                            error_log('CAINTRACK first version not recorded: ' . $e->getMessage());
+                        }
+
                         $_SESSION['submit_ok'] = '“' . $old['title'] . '” was submitted. DILG will review it.';
                         header('Location: submit_document.php');
                         exit;

@@ -1,0 +1,104 @@
+/* Compliance Monitoring page (table basics come from dashboard_dilg.css) */
+button.btn { font: inherit; cursor: pointer; }
+
+.action-link { font-weight: 700; color: var(--orange-deep); }
+.text-alert { color: #A12A1A; font-weight: 700; }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* "Show" selector */
+.view-form { display: flex; align-items: center; gap: 0.5rem; }
+.view-form label { font-weight: 700; font-size: 0.9rem; }
+
+.view-form select {
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.view-form select:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9rem;
+}
+
+.legend li { display: flex; align-items: center; gap: 0.4rem; }
+
+/* Status cells */
+.cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.cell-compliant { color: #1E6B34; background: #E6F4EA; }
+.cell-review    { color: #8A4B00; background: var(--orange-tint); }
+.cell-revision  { color: #A12A1A; background: #FCE8E4; }
+.cell-overdue   { color: #FFFFFF; background: #A12A1A; border-color: #A12A1A; }
+.cell-missing   { color: #4A4A4A; background: #EFEFEF; }
+
+a.cell:hover { box-shadow: 0 0 0 3px var(--orange); }
+
+/* Matrix */
+.table-wrap { overflow-x: auto; }
+
+.matrix-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+
+.matrix-table th,
+.matrix-table td {
+    padding: 0.7rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+.matrix-table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.matrix-table .brgy-col { min-width: 86px; text-align: center; }
+
+.matrix-table .req-col {
+    min-width: 240px;
+    text-align: left;
+    background: var(--white);
+    position: sticky;
+    left: 0;
+}
+
+.matrix-table tbody th.req-col { font-weight: 700; font-size: 0.95rem; }
+
+.req-meta { display: block; margin-top: 0.15rem; font-size: 0.8rem; font-weight: 400; color: var(--muted); }
+.req-note { display: block; font-weight: 700; color: #A12A1A; }
+
+.done-col { font-weight: 700; white-space: nowrap; }
+
+@media (max-width: 700px) {
+    .view-form { margin-top: 0.75rem; }
+}

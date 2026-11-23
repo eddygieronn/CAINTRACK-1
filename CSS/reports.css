@@ -1,0 +1,78 @@
+/* Reports page (table basics come from dashboard_dilg.css) */
+button.btn { font: inherit; cursor: pointer; }
+
+.action-link { font-weight: 700; color: var(--orange-deep); }
+.stack-gap { margin-top: 1.5rem; }
+.print-only { display: none; }
+
+/* Report type tabs */
+.report-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+
+.report-tabs a {
+    padding: 0.6rem 1.1rem;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--white);
+}
+
+.report-tabs a:hover { background: var(--orange-tint); }
+.report-tabs a.active { background: var(--ink); color: var(--white); }
+
+/* Filters */
+.filter-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; }
+.filter-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.filter-field label { font-weight: 700; font-size: 0.9rem; }
+
+.filter-field input,
+.filter-field select {
+    padding: 0.6rem 0.8rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+}
+
+.filter-field input:focus-visible,
+.filter-field select:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
+/* Report output */
+.report-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.generated { margin-top: 0.2rem; font-size: 0.85rem; color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0 0 1.25rem; padding: 0; list-style: none; }
+.chips li { display: flex; align-items: center; gap: 0.4rem; }
+
+.detail-heading { margin: 1.5rem 0 0.75rem; font-size: 1.05rem; }
+
+.table-wrap { overflow-x: auto; }
+.report-table td { white-space: normal; min-width: 90px; }
+.report-table td:nth-child(2) { min-width: 160px; }
+
+.result-count { margin: 1rem 0 0; color: var(--muted); font-size: 0.9rem; }
+
+/* Printing: only the report itself */
+@media print {
+    .dashboard-header,
+    .dashboard-sidebar,
+    .dashboard-footer,
+    .no-print { display: none !important; }
+
+    .print-only { display: block; }
+    .report-print-head { margin-bottom: 0.75rem; font-size: 1.1rem; }
+
+    body, .dashboard-page { background: #fff !important; }
+    .dashboard-layout { display: block !important; }
+    .dashboard-main { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: none !important; }
+    .dashboard-panel { border: none !important; box-shadow: none !important; padding: 0 !important; }
+
+    .data-table { font-size: 10.5px; }
+    .data-table th, .data-table td { padding: 0.3rem 0.4rem; white-space: normal; }
+    .status { border: 1px solid #000 !important; }
+}

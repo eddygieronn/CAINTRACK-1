@@ -70,7 +70,7 @@ try {
     $offset     = ($page - 1) * $perPage;
 
     $stmt = $pdo->prepare(
-        "SELECT title, document_type, status, remarks, submitted_at, updated_at
+        "SELECT id, title, document_type, status, remarks, submitted_at, updated_at
          FROM documents
          WHERE $where
          ORDER BY submitted_at DESC
@@ -161,6 +161,7 @@ require __DIR__ . '/includes/user_top.php';
                                 <th scope="col">DILG remarks</th>
                                 <th scope="col">Submitted</th>
                                 <th scope="col">Last updated</th>
+                                <th scope="col">Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -177,6 +178,7 @@ require __DIR__ . '/includes/user_top.php';
                                 </td>
                                 <td><?= htmlspecialchars(date('M j, Y', strtotime($doc['submitted_at']))) ?></td>
                                 <td><?= htmlspecialchars(date('M j, Y', strtotime($doc['updated_at']))) ?></td>
+                                <td><a class="action-link" href="document_details.php?id=<?= (int) $doc['id'] ?>">View</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

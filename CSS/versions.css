@@ -1,0 +1,94 @@
+/* Document details and version history (barangay details page and DILG review page) */
+button.btn { font: inherit; cursor: pointer; }
+
+.action-link { font-weight: 700; color: var(--orange-deep); }
+
+.detail-list { margin: 0; }
+
+.detail-list > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-list dt { font-weight: 700; color: var(--muted); }
+.detail-list dd { margin: 0; text-align: right; }
+
+.returned-note {
+    margin: 0 0 1.25rem;
+    padding: 0.9rem 1rem;
+    border-left: 5px solid #A12A1A;
+    background: #FCE8E4;
+    color: #7A1F13;
+}
+
+.returned-note strong { display: block; margin-bottom: 0.25rem; }
+.returned-note p { margin: 0; }
+
+.stack-gap { margin-top: 1.5rem; }
+
+.table-wrap { overflow-x: auto; }
+
+.version-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+
+.version-table th,
+.version-table td {
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+}
+
+.version-table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.version-table td.nowrap { white-space: nowrap; }
+.version-table td.remarks { min-width: 200px; color: var(--muted); }
+.version-table td:first-child { font-weight: 700; white-space: nowrap; }
+
+.current-tag {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.1rem 0.5rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.muted { color: var(--muted); }
+
+/* Upload form */
+.revision-form { max-width: 560px; }
+
+.form-field { margin-bottom: 1.25rem; }
+.form-field label { display: block; margin-bottom: 0.35rem; font-weight: 700; }
+
+.form-field input[type="file"] {
+    width: 100%;
+    padding: 0.6rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--orange-tint);
+    border: 2px dashed var(--ink);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form-field input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.form-hint { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
+
+.form-success-box,
+.form-error-box { margin: 0 0 1.25rem; padding: 0.75rem 1rem; font-weight: 500; }
+
+.form-success-box { border-left: 5px solid #1E6B34; background: #E6F4EA; color: #14532B; }
+.form-error-box   { border-left: 5px solid #A12A1A; background: #FCE8E4; color: #7A1F13; }

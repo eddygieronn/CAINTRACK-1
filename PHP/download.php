@@ -38,9 +38,28 @@ if (!$isDilg && !$isOwner) {
     fail(403, 'You do not have access to this file.');
 }
 
+// Open an older version when ?version=N is given, otherwise the current file
+$relative  = $doc['file_path'];
+$versionNo = 0;
+
+if (isset($_GET['version'])) {
+    $versionNo = (int) $_GET['version'];
+    try {
+        $stmt = db()->prepare('SELECT file_path FROM document_versions WHERE document_id = ? AND version_no = ?');
+        $stmt->execute([$id, $versionNo]);
+        $relative = $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log('CAINTRACK download version error: ' . $e->getMessage());
+        fail(404, 'File not found.');
+    }
+    if (!$relative) {
+        fail(404, 'File not found.');
+    }
+}
+
 // The file must really be inside the uploads folder
 $base = realpath(dirname(__DIR__) . '/uploads');
-$path = realpath(dirname(__DIR__) . '/' . $doc['file_path']);
+$path = realpath(dirname(__DIR__) . '/' . $relative);
 
 if ($base === false || $path === false
     || strpos($path, $base . DIRECTORY_SEPARATOR) !== 0 || !is_file($path)) {
@@ -63,6 +82,9 @@ if (!isset($types[$ext])) {
 // PDFs and images open in the browser; Word files download
 $inline   = in_array($ext, ['pdf', 'jpg', 'jpeg', 'png'], true);
 $safeName = trim(preg_replace('/[^A-Za-z0-9._ -]+/', '_', $doc['title']), ' ._') ?: 'document';
+if ($versionNo > 0) {
+    $safeName .= '_v' . $versionNo;
+}
 
 session_write_close();
 

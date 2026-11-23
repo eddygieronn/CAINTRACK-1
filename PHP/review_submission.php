@@ -24,8 +24,10 @@ $decisions = [
     'incomplete'   => 'Incomplete (missing parts)',
 ];
 
-$doc      = null;
-$errors   = [];
+$doc        = null;
+$versions   = [];
+$versionsOk = true;
+$errors     = [];
 $dbError  = false;
 $form     = ['status' => '', 'remarks' => ''];
 
@@ -56,6 +58,22 @@ try {
 
     $form['status']  = isset($decisions[$doc['status']]) ? $doc['status'] : '';
     $form['remarks'] = (string) ($doc['remarks'] ?? '');
+
+    // Version history (needs the document_versions table)
+    try {
+        $stmt = $pdo->prepare(
+            'SELECT v.version_no, v.uploaded_at, v.dilg_status, v.dilg_remarks, u.full_name AS uploader
+             FROM document_versions v
+             JOIN users u ON u.id = v.uploaded_by
+             WHERE v.document_id = ?
+             ORDER BY v.version_no DESC'
+        );
+        $stmt->execute([$id]);
+        $versions = $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log('CAINTRACK review version history error: ' . $e->getMessage());
+        $versionsOk = false;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form['status']  = $_POST['status'] ?? '';
@@ -94,6 +112,22 @@ try {
                 }
             }
 
+            // Keep the outcome and remarks on the version DILG just reviewed
+            try {
+                $stmt = $pdo->prepare('SELECT MAX(version_no) FROM document_versions WHERE document_id = ?');
+                $stmt->execute([$id]);
+                $latest = (int) $stmt->fetchColumn();
+
+                if ($latest > 0) {
+                    $pdo->prepare(
+                        'UPDATE document_versions SET dilg_status = ?, dilg_remarks = ?
+                         WHERE document_id = ? AND version_no = ?'
+                    )->execute([$form['status'], $remarks, $id, $latest]);
+                }
+            } catch (PDOException $e) {
+                error_log('CAINTRACK version outcome not saved: ' . $e->getMessage());
+            }
+
             $_SESSION['review_ok'] = '“' . $doc['title'] . '” (' . $doc['barangay'] . ') was marked '
                 . strtolower($statusMap[$form['status']][0]) . '.';
             header('Location: submissions_dilg.php');
@@ -108,7 +142,7 @@ try {
 // Layout settings, then the shared top of the page
 $pageTitle  = 'Review Document';
 $activePage = 'submissions';
-$extraCss   = ['submissions.css'];
+$extraCss   = ['submissions.css', 'versions.css'];
 require __DIR__ . '/includes/dash_top.php';
 ?>
         <div class="welcome-section">
@@ -205,6 +239,68 @@ require __DIR__ . '/includes/dash_top.php';
                 </form>
             </section>
         </div>
+
+        <section class="dashboard-panel stack-gap">
+            <div class="panel-heading">
+                <div>
+                    <h2>Version history</h2>
+                    <p>Every file the barangay uploaded for this document, newest first. DILG reviews the current version.</p>
+                </div>
+            </div>
+
+            <?php if (!$versionsOk): ?>
+                <p class="muted">Version history is not set up yet. Run <strong>schema_update_versions.sql</strong>.</p>
+            <?php elseif (!$versions): ?>
+                <p class="muted">No versions are recorded for this document yet.</p>
+            <?php else: ?>
+                <?php $latestNo = (int) $versions[0]['version_no']; ?>
+                <div class="table-wrap">
+                    <table class="version-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Version</th>
+                                <th scope="col">Uploaded</th>
+                                <th scope="col">File</th>
+                                <th scope="col">DILG outcome</th>
+                                <th scope="col">DILG remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($versions as $v):
+                                $isLatest = (int) $v['version_no'] === $latestNo;
+                            ?>
+                            <tr>
+                                <td>
+                                    v<?= (int) $v['version_no'] ?>
+                                    <?php if ($isLatest): ?><span class="current-tag">Current</span><?php endif; ?>
+                                </td>
+                                <td class="nowrap">
+                                    <?= htmlspecialchars(date('M j, Y g:i A', strtotime($v['uploaded_at']))) ?>
+                                    <span class="muted"><br>by <?= htmlspecialchars($v['uploader']) ?></span>
+                                </td>
+                                <td class="nowrap">
+                                    <a class="action-link"
+                                       href="download.php?id=<?= (int) $doc['id'] ?>&amp;version=<?= (int) $v['version_no'] ?>"
+                                       target="_blank" rel="noopener">Open ↗</a>
+                                </td>
+                                <td class="nowrap">
+                                    <?php if ($v['dilg_status']):
+                                        [$vl, $vc] = $statusMap[$v['dilg_status']] ?? [$v['dilg_status'], 'status-pending']; ?>
+                                        <span class="status <?= $vc ?>"><?= htmlspecialchars($vl) ?></span>
+                                    <?php elseif ($isLatest): ?>
+                                        <span class="muted">Awaiting review</span>
+                                    <?php else: ?>
+                                        <span class="muted">—</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="remarks"><?= !empty($v['dilg_remarks']) ? htmlspecialchars($v['dilg_remarks']) : '—' ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </section>
 
         <?php endif; ?>
 

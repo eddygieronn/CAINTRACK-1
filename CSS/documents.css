@@ -78,3 +78,5 @@ button.btn { font: inherit; cursor: pointer; }
     color: #7A1F13;
     font-weight: 500;
 }
+
+.action-link { font-weight: 700; color: var(--orange-deep); }

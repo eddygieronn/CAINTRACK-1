@@ -38,7 +38,7 @@ try {
     // Each active requirement with this barangay's latest linked submission
     $stmt = $pdo->prepare(
         'SELECT r.id, r.title, r.document_type, r.deadline,
-                d.status AS doc_status
+                d.status AS doc_status, d.id AS doc_id
          FROM required_documents r
          LEFT JOIN documents d ON d.id = (
              SELECT d2.id
@@ -199,10 +199,13 @@ require __DIR__ . '/includes/user_top.php';
                                 <td><span class="status <?= $class ?>"><?= htmlspecialchars($label) ?></span></td>
                                 <td>
                                     <?php if ($needsAction): ?>
-                                        <a class="action-link"
-                                           href="submit_document.php?requirement=<?= (int) $r['id'] ?>">
-                                            <?= $r['state'] === 'revision' ? 'Resubmit' : 'Submit' ?>
-                                        </a>
+                                        <?php if ($r['state'] === 'revision' && !empty($r['doc_id'])): ?>
+                                            <a class="action-link"
+                                               href="document_details.php?id=<?= (int) $r['doc_id'] ?>">Resubmit</a>
+                                        <?php else: ?>
+                                            <a class="action-link"
+                                               href="submit_document.php?requirement=<?= (int) $r['id'] ?>">Submit</a>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         —
                                     <?php endif; ?>
